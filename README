@@ -1,0 +1,23 @@
+Lazy comet with PHP.
+Simple implementation of lazy comet PHP.
+
+NovComet.subscribe('customAlert', function(data){
+    console.log('customAlert');
+    //console.log(data);
+}).subscribe('customAlert2', function(data){
+    console.log('customAlert2');
+    //console.log(data);
+});
+
+$(document).ready(function() {
+    $("a.customAlert").click(function(event) {
+        NovComet.publish('customAlert');
+    });
+    
+    $("a.customAlert2").click(function(event) {
+        NovComet.publish('customAlert2');
+    });
+    
+    NovComet.run();
+    
+});
