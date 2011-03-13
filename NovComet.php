@@ -18,7 +18,7 @@ class NovComet {
     private $_ids = array();
     private $_callback = null;
 
-    public function  __construct($tries = 20, $sleep = 2) 
+    public function  __construct($tries = 10, $sleep = 2) 
     {
         $this->_tries = $tries;
         $this->_sleep = $sleep;
@@ -47,7 +47,7 @@ class NovComet {
     const DEFAULT_COMET_PATH = "/dev/shm/%s.comet";
     
     public function run() {
-        if (is_null($callback)) {
+        if (is_null($this->_callback)) {
             $defaultCometPAth = self::DEFAULT_COMET_PATH;
             $callback = function($id) use ($defaultCometPAth) {
                 $cometFile = sprintf($defaultCometPAth, $id);
@@ -56,7 +56,7 @@ class NovComet {
         } else {
             $callback = $this->_callback;
         }
-        
+        $out = array();
         for ($i = 0; $i < $this->_tries; $i++) {
             foreach ($this->_vars as $id => $timestamp) {
                 if ((integer) $timestamp == 0) {
